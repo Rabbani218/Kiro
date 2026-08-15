@@ -1,0 +1,68 @@
+# ── OS-generated files ────────────────────────────────────────
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+# ── Editor & IDE artifacts ─────────────────────────────────────
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.sublime-project
+*.sublime-workspace
+
+# ── Dependency directories ─────────────────────────────────────
+# (none needed for this pure static project, but kept as safeguard)
+node_modules/
+bower_components/
+
+# ── Build output ───────────────────────────────────────────────
+dist/
+build/
+out/
+
+# ── Environment & secrets ──────────────────────────────────────
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+secrets.json
+
+# ── Logs & temp files ──────────────────────────────────────────
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.tmp
+*.temp
+*.cache
+
+# ── Package manager lock files (optional for static sites) ────
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# ── Vercel local dev cache ─────────────────────────────────────
+.vercel

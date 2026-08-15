@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Life Dashboard</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ===== TOP BAR ===== -->
+  <header class="topbar">
+    <div class="topbar__left">
+      <span class="topbar__logo">&#9675; Dashboard</span>
+    </div>
+    <div class="topbar__right">
+      <!-- Theme Toggle -->
+      <div class="theme-toggle" title="Toggle light / dark mode">
+        <span class="theme-toggle__icon" aria-hidden="true">☀️</span>
+        <label class="switch" aria-label="Toggle dark mode">
+          <input type="checkbox" id="themeToggle" />
+          <span class="switch__slider"></span>
+        </label>
+        <span class="theme-toggle__icon" aria-hidden="true">🌙</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="dashboard">
+
+    <!-- ROW 1: Greeting + Clock | Focus Timer -->
+    <section class="card card--hero" aria-label="Greeting and clock">
+      <div class="hero__greeting-block">
+        <p id="greeting" class="hero__greeting">Good morning</p>
+        <div class="hero__name-row">
+          <h1 id="greetingName" class="hero__name">Friend</h1>
+          <button class="btn-icon" id="editNameBtn" title="Edit your name" aria-label="Edit name">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+            </svg>
+          </button>
+        </div>
+        <!-- Inline name editor (hidden by default) -->
+        <div class="name-editor" id="nameEditor" aria-hidden="true">
+          <input type="text" id="nameInput" class="name-editor__input" placeholder="Enter your name…" maxlength="30" aria-label="Your name" />
+          <button class="btn btn--primary btn--sm" id="saveNameBtn">Save</button>
+          <button class="btn btn--ghost btn--sm" id="cancelNameBtn">Cancel</button>
+        </div>
+      </div>
+      <div class="hero__clock-block">
+        <p id="clock" class="hero__time" aria-live="polite" aria-atomic="true">00:00:00</p>
+        <p id="dateDisplay" class="hero__date"></p>
+      </div>
+    </section>
+
+    <!-- ROW 2: Focus Timer | To-Do List -->
+    <div class="dashboard__row">
+
+      <!-- Focus Timer Card -->
+      <section class="card card--timer" aria-label="Focus timer">
+        <h2 class="card__title">
+          <span aria-hidden="true">⏱</span> Focus Timer
+        </h2>
+        <p class="card__subtitle">Pomodoro — 25 minutes</p>
+        <div class="timer__display" aria-live="polite" aria-atomic="true">
+          <span id="timerMinutes">25</span><span class="timer__colon">:</span><span id="timerSeconds">00</span>
+        </div>
+        <div class="timer__progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="1500" aria-valuenow="1500" id="timerProgressBar">
+          <div class="timer__progress-fill" id="timerProgressFill"></div>
+        </div>
+        <div class="timer__controls">
+          <button class="btn btn--primary" id="timerStart" aria-label="Start timer">▶ Start</button>
+          <button class="btn btn--secondary" id="timerStop" aria-label="Stop timer" disabled>⏸ Stop</button>
+          <button class="btn btn--ghost" id="timerReset" aria-label="Reset timer">↺ Reset</button>
+        </div>
+        <p class="timer__status" id="timerStatus">Ready to focus</p>
+      </section>
+
+      <!-- To-Do List Card -->
+      <section class="card card--todo" aria-label="To-do list">
+        <h2 class="card__title">
+          <span aria-hidden="true">✅</span> To-Do List
+        </h2>
+
+        <!-- Add Task Input -->
+        <div class="todo__input-row">
+          <input type="text" id="taskInput" class="input" placeholder="Add a new task…" maxlength="120"
+            aria-label="New task name" />
+          <button class="btn btn--primary" id="addTaskBtn" aria-label="Add task">Add</button>
+        </div>
+        <p class="todo__error" id="taskError" role="alert" aria-live="assertive"></p>
+
+        <!-- Filter Tabs -->
+        <div class="todo__filters" role="tablist" aria-label="Filter tasks">
+          <button class="filter-tab filter-tab--active" data-filter="all" role="tab" aria-selected="true">All</button>
+          <button class="filter-tab" data-filter="active" role="tab" aria-selected="false">Active</button>
+          <button class="filter-tab" data-filter="completed" role="tab" aria-selected="false">Done</button>
+        </div>
+
+        <!-- Task List -->
+        <ul class="todo__list" id="taskList" aria-label="Tasks">
+          <!-- populated by JS -->
+        </ul>
+
+        <p class="todo__empty" id="taskEmpty">No tasks yet — add one above!</p>
+        <div class="todo__footer">
+          <span id="taskCount" class="todo__count"></span>
+          <button class="btn btn--ghost btn--sm" id="clearCompletedBtn">Clear completed</button>
+        </div>
+      </section>
+
+    </div><!-- end .dashboard__row -->
+
+    <!-- ROW 3: Quick Links -->
+    <section class="card card--links" aria-label="Quick links">
+      <h2 class="card__title">
+        <span aria-hidden="true">🔗</span> Quick Links
+      </h2>
+
+      <!-- Add Link Form -->
+      <form class="links__form" id="addLinkForm" novalidate aria-label="Add new quick link">
+        <input type="text" id="linkName" class="input" placeholder="Name (e.g. GitHub)" maxlength="40"
+          aria-label="Link name" required />
+        <input type="url" id="linkUrl" class="input" placeholder="URL (e.g. https://github.com)" maxlength="300"
+          aria-label="Link URL" required />
+        <button type="submit" class="btn btn--primary" aria-label="Add link">Add Link</button>
+      </form>
+      <p class="links__error" id="linkError" role="alert" aria-live="assertive"></p>
+
+      <!-- Links Grid -->
+      <div class="links__grid" id="linksGrid" aria-label="Saved quick links">
+        <!-- populated by JS -->
+      </div>
+      <p class="links__empty" id="linksEmpty">No links yet — add your favourites above!</p>
+    </section>
+
+  </main>
+
+  <!-- ===== TOAST NOTIFICATION ===== -->
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
